@@ -49,3 +49,16 @@ jobs:
         with:
           fpm_args: "usr"
           fpm_opts: "--debug -n mc-plugins -v ${{ steps.get_version.outputs.version }} -t rpm -a arm64 -s dir -C ./package/arm64 --description 'Magic Castle Plugins package'"
+
+      - name: Find filenames of rpms
+        id: find_filenames
+        shell: bash
+        run: |
+          rpmfile="$(ls -1 *.rpm)"
+          echo ::set-output name=rpmfile::${rpmfile}
+
+      - name: Upload RPM package as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: RPM package
+          path: ${{ steps.find_filenames.outputs.rpmfile }}
