@@ -31,7 +31,7 @@ jobs:
           echo ::set-output name=version::${VERSION}
 
       - name: Build binaries
-        id: build-binaries:
+        id: build-binaries
         run: |
           make
           GOARCH=arm64 make
