@@ -44,7 +44,7 @@ jobs:
           fpm_opts: "--debug -n mc-plugins -v ${{ steps.get_version.outputs.version }} -t rpm  -s dir -C ./package/amd64 --description 'Magic Castle Plugins package'"
       
       - name: Build arm64 RPM
-        id: build-rpm
+        id: build-rpm-arm64
         uses: bpicode/github-action-fpm@master
         with:
           fpm_args: "usr"
