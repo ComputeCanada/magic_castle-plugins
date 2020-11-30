@@ -21,10 +21,10 @@ type Node struct {
 
 // NodeSpecs structure
 type NodeSpecs struct {
-	Cpus       int `json:"cpus"`
-	Gpus       int `json:"gpus"`
-	RealMemory int `json:"realmemory"`
-	Weight     int `json:"weight"`
+	Cpus       int `json:"cpus,string"`
+	Gpus       int `json:"gpus,string"`
+	RealMemory int `json:"realmemory,string"`
+	Weight     int `json:"weight,string"`
 }
 
 func main() {
