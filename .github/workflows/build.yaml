@@ -1,0 +1,51 @@
+
+name: Build client packages
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.13.15' # The Go version to download (if necessary) and use.
+      
+      - name: Get the version number for the packages
+        id: get_version
+        # If this is a tag, use the tag name (e.g. v1.2.3) without v as version number.
+        # Otherwise, just use 0.0.
+        run: |
+          VERSION=0.0
+          REF_NAME=${{ github.ref }}
+          [[ $REF_NAME == refs/tags/v* ]] && VERSION=${REF_NAME/refs\/tags\/v/}
+          echo ::set-output name=version::${VERSION}
+
+      - name: Build binaries
+        id: build-binaries:
+        run: |
+          make
+          GOARCH=arm64 make
+
+      - name: Build x86_64 RPM
+        id: build-rpm
+        uses: bpicode/github-action-fpm@master
+        with:
+          fpm_args: "usr"
+          fpm_opts: "--debug -n mc-plugins -v ${{ steps.get_version.outputs.version }} -t rpm  -s dir -C ./package/amd64 --description 'Magic Castle Plugins package'"
+      
+      - name: Build arm64 RPM
+        id: build-rpm
+        uses: bpicode/github-action-fpm@master
+        with:
+          fpm_args: "usr"
+          fpm_opts: "--debug -n mc-plugins -v ${{ steps.get_version.outputs.version }} -t rpm -a arm64 -s dir -C ./package/arm64 --description 'Magic Castle Plugins package'"

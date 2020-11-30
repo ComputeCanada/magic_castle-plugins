@@ -22,6 +22,7 @@ export GOARCH ?= $(TARGET_ARCH_LOCAL)
 
 OUT_DIR := ./dist
 
-build:
-	CGO_ENABLED=$(CGO) GOARCH=$(GOARCH) go build -o ./$(OUT_DIR)/consul2slurm ./cmd/consul2slurm 
-
+dist/$(GOARCH)/consul2slurm:
+	CGO_ENABLED=$(CGO) GOARCH=$(GOARCH) go build -o $(OUT_DIR)/$(GOARCH)/consul2slurm ./cmd/consul2slurm
+	mkdir -p ./package/$(GOARCH)/usr/local/bin
+	ln -f $(OUT_DIR)/$(GOARCH)/consul2slurm ./package/$(GOARCH)/usr/local/bin
