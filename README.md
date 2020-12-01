@@ -1,7 +1,7 @@
 # Magic Castle Plugins
 
-This repository contains plugins used by [Magic Castle](https://www.github.com/computecanada/magic_castle) but
-than cannot be simply deployed by [Puppet Magic Castle](https://www.github.com/computecanada/puppet-magic_castle)
+This repository contains plugins used by [Magic Castle](https://www.github.com/computecanada/magic_castle)
+that cannot be simply deployed by [Puppet Magic Castle](https://www.github.com/computecanada/puppet-magic_castle)
 because they require to be compiled first before being deployed.
 
 List of plugins
