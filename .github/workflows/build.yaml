@@ -33,6 +33,7 @@ jobs:
       - name: Build binaries
         id: build-binaries
         run: |
+          go mod init cmd/consul2slurm
           make
           GOARCH=arm64 make
 
