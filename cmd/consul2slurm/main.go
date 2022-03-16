@@ -21,10 +21,11 @@ type Node struct {
 
 // NodeSpecs structure
 type NodeSpecs struct {
-	Cpus       int `json:"cpus,string"`
-	Gpus       int `json:"gpus,string"`
-	RealMemory int `json:"realmemory,string"`
-	Weight     int `json:"weight,string"`
+	Cpus         int `json:"cpus,string"`
+	Gpus         int `json:"gpus,string"`
+	RealMemory   int `json:"realmemory,string"`
+	MemSpecLimit int `json:"memspeclimit,string"`
+	Weight       int `json:"weight,string"`
 }
 
 func main() {
@@ -93,10 +94,11 @@ func main() {
 	// Output the nodes in Slurm configuration format with the weights
 	for i := 0; i < len(nodes); i++ {
 		fmt.Printf(
-			"NodeName=%s CPUs=%d RealMemory=%d ",
+			"NodeName=%s CPUs=%d RealMemory=%d MemSpecLimit=%d ",
 			nodes[i].Name,
 			nodes[i].Specs.Cpus,
 			nodes[i].Specs.RealMemory,
+			nodes[i].Specs.MemSpecLimit,
 		)
 		if nodes[i].Specs.Gpus > 0 {
 			fmt.Printf("Gres=gpu:%d ", nodes[i].Specs.Gpus)
